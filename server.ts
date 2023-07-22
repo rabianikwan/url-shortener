@@ -1,0 +1,8 @@
+import express from 'express'
+
+const app = express()
+
+app.get('/', (req, res) => {
+    res.send('Halo Dunia')
+})
+export default app;
