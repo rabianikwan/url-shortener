@@ -1,8 +1,8 @@
 import express from 'express'
+import routes from './router/routes'
 
 const app = express()
 
-app.get('/', (req, res) => {
-    res.send('Halo Dunia')
-})
+app.use(routes);
+
 export default app;
