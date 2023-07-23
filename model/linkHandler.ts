@@ -1,4 +1,4 @@
-import { PrismaClient } from "@prisma/client";
+import {PrismaClient} from "@prisma/client";
 
 const prisma = new PrismaClient();
 
@@ -9,38 +9,38 @@ class Link {
         return allLinks;
     };
 
-    async insert(name:string, linkDefault:string, linkModified:string) {
-        const create = {name, linkDefault, linkModified}
+    async create(name:string, linkDefault:string) {
+        const create = { name, linkDefault }
         await prisma.link.create({
-            data : { name : name, linkDefault : linkDefault, linkModified : linkModified }
+            data : {
+                name ,
+                linkDefault ,
+                linkModified : "/" + name }
         })
+        return create
     };
 
     async findLinkByName(name:string) {
-        const findLink = await prisma.link.findUnique({
-            where : { name : name }
+        return await prisma.link.findUnique({
+            where: {name: name}
         })
-        console.log(findLink)
-        return findLink
     };
 
-    async updateLinkByName(name:string, newName:string, linkDefault:string, linkModified:string) {
+    async updateLinkByName(name:string, newName:string, linkDefault:string) {
         await prisma.link.update({
-            where : { name : name }
+            where : { name }
             , data : {
             name : newName,
-            linkDefault : linkDefault,
-            linkModified : linkModified
+            linkDefault,
+            linkModified : "/" + newName
         }})
     };
 
     async deleteLinkByName(name:string) {
-        await prisma.link.delete({
-            where : {
-                name : name
-            }
+        const deleteLink:object = await prisma.link.delete({
+            where : { name }
         });
-        await this.getAllLinks()
+        return deleteLink;
     }
 }
 
