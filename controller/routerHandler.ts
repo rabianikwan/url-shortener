@@ -1,5 +1,4 @@
 import Link from "../model/linkHandler";
-import _default from "ts-jest";
 import {responseError, responseOK} from "../utils/responseJSON";
 
 const tutorialHome:object = {
@@ -56,7 +55,7 @@ export const deleteLink = async (req:any, res:any) => {
     try {
         const { name } = req.body;
         !name && res.status(401).json(responseError("link doesn't have name"));
-        const result = await model.deleteLinkByName(name)
+        await model.deleteLinkByName(name)
         return res.json(responseOK("link has been delete", { result : "link has been deleted"}))
     }
     catch (e) {
